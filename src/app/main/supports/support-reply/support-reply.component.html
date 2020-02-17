@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Support Reply</h2>
+<mat-dialog-content class="content">
+  <div fxLayout="column">
+    <div fxLayout="row wrap">
+      <div class="content">
+        <form name="replyForm" [formGroup]="replyForm" novalidate fxLayout="column">
+          <mat-form-field appearance="outline" fxFlex="100">
+            <input matInput formControlName="subject" maxlength="100" placeholder="subject (3-100 characters)" type="text" />
+            <mat-error>Subject is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex="100">
+            <textarea matInput formControlName="replyMessage" maxlength="250" placeholder="reply subject (3-250 characters)" class="message-input"
+              autocorrect="off" autocapitalize="off" spellcheck="off" type="text"></textarea>
+            <mat-error>Message is required</mat-error>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions style="float: right;">
+  <button mat-button [mat-dialog-close]="true">Cancel</button>
+  <button mat-button mat-dialog-close (click)="sendReply()" [disabled]="replyForm.invalid">Send</button>
+</mat-dialog-actions>

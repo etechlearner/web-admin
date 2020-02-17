@@ -1,0 +1,49 @@
+<div id="gyms" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="accent" style="margin-top: 20px;" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Notifications
+                </span>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <mat-table class="gyms-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Subject</mat-header-cell>
+                    <mat-cell *matCellDef="let notification">
+                        <p style="font-weight: 600;">{{notification.subject}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="phone">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+                    <mat-cell *matCellDef="let notification">
+                        <p>{{notification.body}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
+                    <mat-cell *matCellDef="let notification">
+                        <p class="text-truncate">{{ViewTimeAgo(notification.createdAt)}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let gym; columns: displayedColumns;" class="product" matRipple>
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator #paginator [length]="totalLength" [pageSize]="limit" [pageSizeOptions]="pageLimit"
+                (page)="changePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

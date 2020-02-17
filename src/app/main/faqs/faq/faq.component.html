@@ -1,0 +1,60 @@
+<div id="faq" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/faqs'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                    [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2">
+                        FAQ
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="content">
+                <form name="faqForm" [formGroup]="faqForm" class="faq w-100-p" fxLayout="column" fxFlex novalidate>
+                    <div class=" mat-tab-header header  p-24">
+                        <h2 class="m-0" *ngIf="pageType ==='new'">Add FAQ</h2>
+                        <h2 class="m-0" *ngIf="pageType ==='edit'">Edit FAQ</h2>
+                    </div>
+
+                    <div class="tab-content p-24" fusePerfectScrollbar>
+                        <div fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
+                            <mat-form-field appearance="outline" fxFlex="100">
+                                <mat-label>Question</mat-label>
+                                <input matInput placeholder="Question" name="question" maxlength="150"
+                                    formControlName="question">
+                                <mat-error>Question must be valid!</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
+                            <mat-form-field appearance="outline" fxFlex="100">
+                                <mat-label>Answer</mat-label>
+                                <textarea matInput placeholder="Answer" maxlength="200" name="answer"
+                                    formControlName="answer">
+                                </textarea>
+                                <mat-error>Answer must be valid!</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <button mat-raised-button class="save-faq-button" [disabled]="faqForm.invalid"
+                            *ngIf="pageType ==='new'" (click)="addFaq()">
+                            <span>ADD</span>
+                        </button>
+
+                        <button mat-raised-button class="save-faq-button" [disabled]="faqForm.invalid"
+                            *ngIf="pageType ==='edit'" (click)="saveFaq()">
+                            <span>SAVE</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

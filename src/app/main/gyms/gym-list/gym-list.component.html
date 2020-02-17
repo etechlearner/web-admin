@@ -1,0 +1,99 @@
+<div id="gyms" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
+            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Gyms
+                </span>
+            </div>
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #SearchInput placeholder="Search for a gym">
+                    <mat-spinner *ngIf="showSearchLoader" diameter="20"></mat-spinner>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <button mat-raised-button (click)="unassignedGymOwners()" class="add-product-button fuse-white mt-24 mt-md-0">
+                    <span *ngIf="!unassignedGymOwner">Unassigned</span>
+                    <span *ngIf="unassignedGymOwner">Assigned</span>
+                </button>
+
+                <button mat-raised-button (click)="addUser()" style="margin-left: 4px;" class="add-product-button fuse-white mt-24 mt-md-0">
+                    <span>ADD</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <mat-table *ngIf="!noUser" class="gyms-table" (matSortChange)="sortData($event)" #table [dataSource]="dataSource" matSort
+                [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                <ng-container matColumnDef="owner-name">
+                    <mat-header-cell *matHeaderCellDef>Owner Name</mat-header-cell>
+                    <mat-cell *matCellDef="let gymOwner">
+                        <p class="text-truncate">{{gymOwner.name}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="gymName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Gym Name</mat-header-cell>
+                    <mat-cell *matCellDef="let gymOwner">
+                        <p class="text-truncate">{{gymOwner.gym.gymName ? gymOwner.gym.gymName : '---'}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="phone">
+                    <mat-header-cell *matHeaderCellDef> Phone</mat-header-cell>
+                    <mat-cell *matCellDef="let gymOwner">
+                        <p>{{gymOwner.gym.isoCode ? gymOwner.gym.isoCode+'-' : ''}}</p>
+                        <p class="text-truncate">
+                            {{gymOwner.gym.gymPhone ? gymOwner.gym.gymPhone : '---'}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef> Email</mat-header-cell>
+                    <mat-cell *matCellDef="let gymOwner">
+                        <p class="text-truncate" [matTooltip]="gymOwner.gym ? gymOwner.gym.gymEmail : '---'">
+                            {{gymOwner.gym.gymEmail ? gymOwner.gym.gymEmail : '---'}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="createdAt">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Created At</mat-header-cell>
+                    <mat-cell *matCellDef="let gymOwner">
+                        <p class="text-truncate">
+                            {{gymOwner.gym.createdAtDate ? moment(gymOwner.gym.createdAtDate).format("DD/MM/YYYY") : '---'}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="active">
+                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs></mat-header-cell>
+                    <mat-cell *matCellDef="let gymOwner" fxHide fxShow.gt-xs>
+                        <button mat-raised-button aria-label="More" style="margin: 0 5px; margin-left: auto;"
+                            (click)="viewGym(gymOwner)">
+                            More
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let gymOwner; columns: displayedColumns;" class="product" matRipple>
+                </mat-row>
+            </mat-table>
+
+            <div class="no-user-found" *ngIf="noUser">
+                <h4>No Match found</h4>
+                <h4>Try different keywords</h4>
+            </div>
+
+            <mat-paginator #paginator [length]="totalLength" [pageSize]="limit" [pageSizeOptions]="pageLimit"
+                (page)="changePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

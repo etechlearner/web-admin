@@ -1,0 +1,100 @@
+<div id="finances" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
+            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Finance
+                </span>
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="card" fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.lt-sm="0px"
+                fxLayoutAlign="space-between center">
+                <mat-card class="mat-card" fxFlex.lt-sm="100">
+                    <mat-card-title>
+                        Total Revenue
+                    </mat-card-title>
+
+                    <mat-card-content>
+                        $ {{finance.totalRevenue}}
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="mat-card" fxFlex.lt-sm="100">
+                    <mat-card-title>
+                        Net Receivable
+                    </mat-card-title>
+
+                    <mat-card-content>
+                        $ {{(finance.netreceivable)}}
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="mat-card" fxFlex.lt-sm="100">
+                    <mat-card-title>
+                        Pending Refund
+                    </mat-card-title>
+
+                    <mat-card-content>
+                        $ {{finance.pendingRefund}}
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+            <mat-table class="finances-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Gym Name</mat-header-cell>
+                    <mat-cell *matCellDef="let finance">
+                        <p class="text-truncate">{{finance.name}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef>Active</mat-header-cell>
+                    <mat-cell *matCellDef="let finance">
+                        <i class="material-icons" *ngIf="finance.isActive">check</i>
+                        <i class="material-icons" *ngIf="!finance.isActive">close</i>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="others">
+                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs></mat-header-cell>
+
+                    <mat-cell *matCellDef="let finance" fxHide fxShow.gt-xs>
+                        <button mat-raised-button style="padding: 0 10px; margin: 0 5px;"
+                            (click)="showOffers(finance.id)">
+                            Offers
+                        </button>
+
+                        <button mat-raised-button style="padding: 0 10px; margin: 0 5px;"
+                            (click)="openEmailDialog(finance)">
+                            Email
+                        </button>
+
+                        <!-- Funtionality not clear -->
+                        <!-- <button mat-raised-button aria-label="Clearing" style="padding: 0 8px; margin: 0 4px;"
+                            (click)="openClearingDialog()">
+                            Clearing
+                        </button> -->
+
+                        <button mat-raised-button (click)="goToGymDetails(finance)">More</button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let finance; columns: displayedColumns;" class="product" matRipple>
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator #paginator [length]="totalLength" [pageSize]="limit" [pageSizeOptions]="pageLimit"
+                (page)="changePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

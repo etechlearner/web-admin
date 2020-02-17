@@ -1,0 +1,41 @@
+<div class="offer-count">
+  <div class="title">
+    Offers
+  </div>
+
+  <div class="card" fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.lt-sm="0px" fxLayoutAlign="space-between center">
+    <mat-card class="mat-card" fxFlex.lt-sm="100">
+      <mat-card-title>
+        Active Offers
+      </mat-card-title>
+
+      <mat-card-content>
+        {{data.activeOffers}}
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-card" fxFlex.lt-sm="100">
+      <mat-card-title>
+        Inactive Offers
+      </mat-card-title>
+
+      <mat-card-content>
+        {{(data.inActiveOffers)}}
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-card" fxFlex.lt-sm="100">
+      <mat-card-title>
+        Expired Offers
+      </mat-card-title>
+
+      <mat-card-content>
+        {{data.expiredOffers}}
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="footer">
+    <button mat-raised-button class="done-button" mat-dialog-close>Done</button>
+  </div>
+</div>

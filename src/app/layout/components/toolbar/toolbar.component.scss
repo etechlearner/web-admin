@@ -1,0 +1,122 @@
+@import "src/@fuse/scss/fuse";
+
+toolbar {
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+    z-index: 4;
+
+    &.below {
+        z-index: 2;
+    }
+
+    .mat-toolbar {
+        position: relative;
+        background: inherit !important;
+        color: inherit !important;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+
+        .logo-icon {
+            width: 38px;
+        }
+    }
+
+    .user-button,
+    fuse-search-bar,
+    .language-button,
+    .chat-panel-toggle-button,
+    .quick-panel-toggle-button {
+        min-width: 64px;
+        height: 64px;
+
+        // @include media-breakpoint('xs') {
+        //     height: 56px;
+        // }
+    }
+
+    .navbar-toggle-button {
+        min-width: 56px;
+        height: 56px;
+    }
+
+    .toolbar-separator {
+        height: 40px !important;
+        width: 1px;
+        background-color: #00000054;
+
+        // @include media-breakpoint('xs') {
+        //     height: 56px;
+        // }
+    }
+}
+
+.notifications-menu {
+    width: 350px;
+    .notification {
+        margin: 5px 10px;
+        min-height: 70px;
+        border-bottom: 1px solid lightgray;
+        .notification-thumbnail {
+            align-self: center;
+        }
+        .notification-content {
+            width: 240px;
+            align-self: center;
+            .notification-title {
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            .notification-subtitle {
+                font-size: 12px;
+                color: #000000c9;
+                max-height: 30px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-break: break-all;
+            }
+        }
+        .notification-arrival-time {
+            width: 80px;
+            font-size: 12px;
+            color: #000000c9;
+            text-align: right;
+            // margin: 0 5px;
+            align-self: center;
+        }
+    }
+
+    .no-notification {
+        justify-content: center;
+        padding: 25px 0;
+    }
+
+    .notifications-menu-footer {
+        .view-all {
+            text-align: center;
+            padding: 15px;
+            background-color: #0000000d;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    }
+}
+
+.notification-menu-panel {
+    .mat-menu-panel {
+        width: 450px !important;
+    }
+}
+div.notification-menu-panel { 
+    max-width:500px;
+    background-color:lightgreen;
+    }
+div.mat-menu-content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+  

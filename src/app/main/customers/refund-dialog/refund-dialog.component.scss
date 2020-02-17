@@ -1,0 +1,30 @@
+.mat-dialog-content {
+  max-width: 660px;
+  min-width: 660px;
+  padding: 0 !important;
+  .content {
+    flex: 1;
+    max-width: 500px;
+    min-width: 500px;
+    margin: 0;
+
+    .title {
+      padding: 16px 0;
+    }
+
+    .heading {
+      font-weight: bold;
+    }
+
+    .separator {
+      border-bottom: 2px solid lightgray;
+      margin: 10px 0;
+    }
+  }
+}
+
+.mat-dialog-content {
+  max-width: 500px;
+  min-width: 500px;
+  margin: 0;
+}

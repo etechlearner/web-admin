@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Select Amenity Icons</h2>
+<mat-dialog-content class="content p-24">
+  <div fxLayout="column">
+
+  
+    <div fxLayout="row wrap" *ngIf="icons">
+
+        <div class="icon-holder m-16" fxLayout="column" fxLayoutAlign="center center"
+             *ngFor="let icon of icons">
+            
+             <img class="icon mr-0 mr-sm-16" (click)="matDialogRef.close(icon)" [src]="icon.handle || 'assets/images/avatars/ic_select_image.png'">
+             
+            <!-- <mat-icon class="secondary-text s-48">{{icon}}</mat-icon> -->
+            <div class="icon-name secondary-text mt-8">{{icon.name}}</div>
+        </div>
+
+    </div>
+
+</div>
+</mat-dialog-content>
+<!-- <mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Done</button>
+</mat-dialog-actions> -->

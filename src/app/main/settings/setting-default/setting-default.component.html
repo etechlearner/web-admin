@@ -1,0 +1,109 @@
+<div id="setting" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="center">
+    <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <!-- <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/settings'">
+          <mat-icon>arrow_back</mat-icon>
+        </button> -->
+
+        <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2">
+            General Settings
+          </div>
+          <!-- <div class="subtitle secondary-text">
+            <span>Setting Detail</span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content">
+        <form name="settingForm" [formGroup]="settingForm" class="setting w-100-p" fxLayout="column" fxFlex novalidate>
+          <div class=" mat-tab-header header  p-24">
+            <h2 class="m-0">Setting Information</h2>
+          </div>
+
+          <div class="tab-content p-24" fusePerfectScrollbar>
+            <div fxLayout="row" fxLayoutAlign="space-between" class="w-100-p">
+              <mat-form-field appearance="outline" fxFlex="50">
+                <mat-label>Commission(%)</mat-label>
+                <input pattern="[0-9]+(\.[0-9][0-9]?)?" min="0" max="100" matInput placeholder="Commission" name="GYMCOMMISSION" formControlName="GYMCOMMISSION">
+                <mat-error>Commission must be valid!</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                <mat-label>Subscription Fee($)</mat-label>
+                <input pattern="[0-9]+(\.[0-9][0-9]?)?" matInput placeholder="Subscription " name="GYMBILLINGCOST" formControlName="GYMBILLINGCOST">
+                <mat-error>Subscription must be valid!</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between" class="w-100-p">
+              <mat-form-field appearance="outline" fxFlex="50">
+                <mat-label>Cancellation Charges(%)</mat-label>
+                <input matInput pattern="[0-9]+(\.[0-9][0-9]?)?" placeholder="Cancellation" name="CANCELLATION" formControlName="CANCELLATION">
+                <mat-error>Cancellation Charges must be valid!</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                <mat-label>Admin Email</mat-label>
+                <input matInput placeholder="Admin Email" name="ADMINEMAIL" formControlName="ADMINEMAIL">
+                <mat-error>Email must be valid!</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between" class="w-100-p">
+              <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label>Country Code</mat-label>
+                <mat-select (selectionChange)="onChangeCountry($event.value)" [placeholder]="countrySelected.CountryName"
+                  formControlName="isoCode">
+                  <mat-select-trigger>
+                    {{countrySelected.CountryName}}
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let country of countryInfo; let i = index" [value]="country">
+                    {{country.CountryName}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>Country Code is required!
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                <mat-label>Admin Phone</mat-label>
+                <input matInput placeholder="Admin Phone" maxlength="10" name="ADMINPHONE" formControlName="ADMINPHONE">
+                <mat-error>Phone must be valid!</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between" class="w-100-p">
+              <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                <mat-label>Admin Password</mat-label>
+                <input matInput maxlength="64" type="password" placeholder="Minimum 8 characters" name="ADMINPASSWORD"
+                  formControlName="ADMINPASSWORD">
+                <mat-error>Uppercase, lowercase, special and alphanumeric characters required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <button mat-raised-button style="margin-top: 15px;" class="save-setting-button"
+              [disabled]="settingForm.invalid" *ngIf="pageType ==='new'" (click)="addSetting()">
+              <span>ADD</span>
+            </button>
+
+            <button mat-raised-button style="margin-top: 15px;" class="save-setting-button"
+              [disabled]="settingForm.invalid || settingForm.pristine" *ngIf="pageType ==='edit' && !disableButton"
+              (click)="saveSetting()">
+              <span>SAVE</span>
+            </button>
+
+            <button mat-raised-button style="margin-top: 15px;" class="save-setting-button" [disabled]="true"
+              *ngIf="disableButton">
+              <span>SAVE</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

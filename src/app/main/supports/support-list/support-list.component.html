@@ -1,0 +1,111 @@
+<div id="supports" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout="row"
+            fxLayoutAlign="space-between center">
+            <div class="logo mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Support
+                </span>
+            </div>
+            <div class="search-wrapper mx-32 mx-md-0">
+            </div>
+        </div>
+
+        <div class="content-card">
+            <mat-tab-group class="reports-mat-tab">
+                <mat-tab label="GYMS">
+                    <div class="reports">
+                        <div fxLayout="row">
+                            <div class="users" fxLayout="column" fxFlex="20">
+                                <div class="sender-title">Sender</div>
+                                <div *ngFor="let report of adminReports.content; let i = index;" class="user"
+                                    (click)="selectedAdmin(i)"
+                                    [ngStyle]="{ 'color' : (adminSelected === i)? 'black' : 'gray' }">
+                                    {{report.userFromObj.name}}</div>
+                            </div>
+
+                            <div class="message" fxLayout="column" fxFlex="80">
+                                <div class="header" fxLayout="row">
+                                    <div *ngIf="adminSelected > -1" class="message-title" style="font-size: 15px;">From:
+                                        {{adminEmail}}</div>
+                                    <div *ngIf="adminSelected > -1">Date: {{adminReportDate}}</div>
+                                </div>
+
+                                <div class="header" fxLayout="row" fxLayoutAlign="space-between">
+                                    <div class="message-title">Subject</div>
+                                    <div class="message-title">Tag: {{adminTag}}</div>
+                                </div>
+
+                                <div class="message-body" style="height: 50px;">
+                                    {{adminSubject}}
+                                </div>
+
+                                <div class="header" fxLayout="row">
+                                    <div class="message-title">Message</div>
+                                </div>
+
+                                <div class="message-body" style="height: 90px;">
+                                    {{adminMessage}}
+                                </div>
+
+                                <button mat-raised-button [disabled]="adminSelected < 0" class="reply-btn"
+                                    (click)="adminReply()">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <mat-paginator #paginator [length]="adminTotalLength" [pageSize]="adminLimit"
+                        [pageSizeOptions]="pageLimit" (page)="changeAdminPage($event)">
+                    </mat-paginator>
+                </mat-tab>
+
+                <mat-tab label="APP USERS">
+                    <div class="reports">
+                        <div fxLayout="row">
+                            <div class="users" fxLayout="column" fxFlex="20">
+                                <div class="sender-title">Sender</div>
+                                <div *ngFor="let report of userReports.content; let i = index;" class="user"
+                                    (click)="selectedUser(i)"
+                                    [ngStyle]="{ 'color' : (userSelected === i)? 'black' : 'gray' }">
+                                    {{report.userFromObj.name}}</div>
+                            </div>
+                            <div class="message" fxLayout="column" fxFlex="80">
+                                <div class="header" fxLayout="row">
+                                    <div *ngIf="userSelected > -1" class="message-title" style="font-size: 15px;">From:
+                                        {{userEmail}}</div>
+                                    <div *ngIf="userSelected > -1">Date: {{userReportDate}}</div>
+                                </div>
+
+                                <div class="header" fxLayout="row" fxLayoutAlign="space-between">
+                                    <div class="message-title">Subject</div>
+                                    <div class="message-title">Tag: {{userTag}}</div>
+                                </div>
+
+                                <div class="message-body" style="height: 50px;">
+                                    {{userSubject}}
+                                </div>
+
+                                <div class="header" fxLayout="row">
+                                    <div class="message-title">Message</div>
+                                </div>
+
+                                <div class="message-body" style="height: 90px;">
+                                    {{userMessage}}
+                                </div>
+
+                                <button mat-raised-button [disabled]="userSelected < 0" class="reply-btn"
+                                    (click)="userReply()">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <mat-paginator #paginator [length]="userTotalLength" [pageSize]="userLimit"
+                        [pageSizeOptions]="pageLimit" (page)="changeUserPage($event)">
+                    </mat-paginator>
+                </mat-tab>
+            </mat-tab-group>
+
+        </div>
+    </div>
+</div>

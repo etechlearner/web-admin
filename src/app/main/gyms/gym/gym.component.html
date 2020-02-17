@@ -1,0 +1,157 @@
+<div id="gym" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/gyms'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <!-- <div class="gym-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                          <img *ngIf="gym.images[0]" [src]="gym.images[0].url">
+                          <img *ngIf="!gym.images[0]" [src]="'assets/images/ecommerce/product-image-placeholder.png'">
+                      </div> -->
+                <div fxLayout="column" fxLayoutAlign="start start"
+                    [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{gym.name}}
+                    </div>
+
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Gym
+                    </div>
+
+                    <div class="subtitle secondary-text">
+                        <span *ngIf="pageType ==='new'">Gym Detail</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subscription Edit Functionality -->
+            <!-- <button *ngIf="pageType ==='edit'" mat-raised-button
+                [routerLink]="'/gyms/edit-commission/'+gym.id+'/'+gym.handle"
+                class="add-product-button fuse-white mt-24 mt-md-0">
+                <span>
+                    <mat-icon>edit</mat-icon> Subscription Edit
+                </span>
+            </button> -->
+        </div>
+
+        <div class="content-card">
+            <div class="content">
+                <form name="gymForm" [formGroup]="gymForm" class="gym w-100-p" fxLayout="column" fxFlex novalidate>
+                    <div class=" mat-tab-header header  p-24">
+                        <h2 class="m-0">Gym Information</h2>
+                    </div>
+
+                    <div class="tab-content p-24" fusePerfectScrollbar>
+                        <div fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
+                            <mat-form-field appearance="outline" fxFlex="100">
+                                <mat-label>Gym Name</mat-label>
+                                <input matInput placeholder="Gym Name" name="name" maxlength="40"
+                                    formControlName="name">
+                                <mat-error *ngIf="gymForm.get('name').errors?.required">Gym Name is required!
+                                </mat-error>
+                                <mat-error *ngIf="gymForm.get('name').errors?.name">
+                                    {{ gymForm.get('name').errors?.name }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+
+                        <!-- EMAIL AND NUMBER -->
+                        <div fxLayout="row" fxLayoutAlign="space-between">
+                            <mat-form-field appearance="outline" fxFlex>
+                                <mat-label>Phone</mat-label>
+                                <input name="phone" formControlName="phone" maxlength="10" matInput required>
+                                <mat-error>Phone number length should be 10 digits</mat-error>
+                                
+                                <!-- Custom server errors -->
+                                <!-- <mat-error *ngIf="userbyroleForm.get('phone').hasError('required')">Phone is required!
+                                </mat-error>
+                                <mat-error *ngIf="userbyroleForm.get('phone').hasError('maxlength')">Phone number length must be 10
+                                    Digits!
+                                </mat-error>
+                                <mat-error *ngIf="userbyroleForm.get('phone').hasError('phone')">
+                                    {{ userbyroleForm.get('phone').errors?.phone }}
+                                </mat-error> -->
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="pl-4" fxFlex>
+                                <mat-label>Email</mat-label>
+                                <input name="email" [readonly]="pageType === 'edit'" formControlName="emailAddress" matInput required>
+                                <mat-error>Email is required!</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="space-between">
+                            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50" class="pl-4">
+                                <mat-label>Country</mat-label>
+                                <mat-select (selectionChange)="onChangeCountry($event.value)" name="isoCode"
+                                    formControlName="isoCode" placeholder="isoCode">
+                                    <!-- <mat-select-trigger>
+                                        <mat-icon
+                                            class="{{ 'flag-icon flag-icon-' +  countrySelected.code | lowercase }}">
+                                        </mat-icon>
+                                        {{countrySelected.CountryName}}
+                                    </mat-select-trigger> -->
+                                    <mat-option *ngFor="let country of countryInfo; let i = index" [value]="country">
+                                        <!-- <mat-icon class="{{ 'flag-icon f lag-icon-' +  country.code | lowercase }}">
+                                        </mat-icon> -->
+                                        {{country.CountryName}} ( {{country.dial_code}} )
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="gymForm.get('isoCode').errors?.required">Country is required!
+                                </mat-error>
+                                <mat-error *ngIf="gymForm.get('isoCode').errors?.isoCode">
+                                    {{ gymForm.get('isoCode').errors?.isoCode }}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50" class="pl-4">
+                                <mat-label>State</mat-label>
+                                <mat-select (selectionChange)="onChangeState($event.value)" name="state"
+                                    formControlName="state" placeholder="State">
+                                    <!--                                    <mat-option *ngIf="stateInfo == ''" value="-1">&#45;&#45;Select State&#45;&#45;</mat-option>-->
+
+                                    <mat-option *ngFor="let state of stateInfo; let j = index" [value]="state">
+                                        {{state.StateName}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>State is required!</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="space-between">
+                            <mat-form-field appearance="outline" fxFlex="80">
+                                <mat-label>NFC Tag</mat-label>
+                                <input matInput placeholder="NFC Tag" readonly name="nfcTag" formControlName="nfcTag"
+                                    #userinput>
+                                <mat-error>NFC Tag must be valid!</mat-error>
+                            </mat-form-field>
+
+                            <div appearance="outline" fxFlex="10" fxLayout="column" fxLayoutAlign="space-evenly center">
+                                <a mat-raised-button (click)="copyInputMessage(userinput)">Copy</a>
+                            </div>
+
+                            <div appearance="outline" fxFlex="10" fxLayout="column" *ngIf="pageType ==='new'"
+                                fxLayoutAlign="space-evenly center">
+                                <a mat-raised-button (click)="genNfc()"> Generate </a>
+                            </div>
+                        </div>
+
+                        <button mat-raised-button class="save-gym-button" [disabled]="gymForm.invalid"
+                            *ngIf="pageType ==='new'" (click)="addGym()">
+                            <span>ADD</span>
+                        </button>
+
+                        <button mat-raised-button class="save-gym-button"
+                            [disabled]="gymForm.invalid || gymForm.pristine" *ngIf="pageType ==='edit'"
+                            (click)="saveGym()">
+                            <span>SAVE</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

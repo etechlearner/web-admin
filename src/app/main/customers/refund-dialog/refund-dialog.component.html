@@ -1,0 +1,28 @@
+<mat-dialog-content class="content">
+  <div fxLayout="column">
+    <div fxLayout="row wrap">
+      <div class="content">
+        <div class="heading">Refund by Gym Rules: </div>
+        <div>(Total amount will be broken down into per day basis and amount of all the remaining days will be refunded)
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="heading">Refund by User Rules: </div>
+        <div>(The amount equal to next availablbe pass on the day of refund, will be deducted, remaining will be
+          refunded)</div>
+
+        <div class="separator"></div>
+
+        <div class="heading">Refund by Custom Rules: </div>
+        <div>(Input the amount to be refunded)</div>
+      </div>
+
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <mat-checkbox (change)="toggleAgree()">Agree</mat-checkbox>
+  <button mat-button [mat-dialog-close]="true" align="end" style="margin-left: auto;" [disabled]="disableAgree"
+    cdkFocusInitial (click)="refund()">Refund</button>
+</mat-dialog-actions>

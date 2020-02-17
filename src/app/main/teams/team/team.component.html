@@ -1,0 +1,154 @@
+<div id="team" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="center">
+    <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/teams'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2">
+            Team
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content">
+        <form name="teamForm" [formGroup]="teamForm" class="team w-100-p" fxLayout="column" fxFlex novalidate>
+          <div class=" mat-tab-header header  p-24">
+            <h2 class="m-0" *ngIf="pageType ==='new'">Add Member</h2>
+            <h2 class="m-0" *ngIf="pageType ==='edit'">Edit Member</h2>
+          </div>
+          <div class="tab-content p-24" fusePerfectScrollbar>
+            <form [formGroup]="teamForm">
+              <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Name</mat-label>
+                  <input name="name" maxlength="100" formControlName="name" matInput required>
+                  <mat-error *ngIf="teamForm.get('name').hasError('required')">Name is required</mat-error>
+                  <mat-error
+                    *ngIf="teamForm.get('name').hasError('minlength') || teamForm.get('name').hasError('maxlength')">
+                    Name length should be 3-25 characters.
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('name').hasError('pattern')">Only alphabetic characters are allowed.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Email</mat-label>
+                  <input name="email" formControlName="email" [readonly]="pageType === 'edit'" matInput required>
+                  <mat-error>Email is required</mat-error>
+                  <!-- <mat-error *ngIf="teamForm.get('email').hasError('required')">Email is required!
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('email').hasError('email')">
+                    {{ teamForm.get('email').errors?.email }}
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Designation</mat-label>
+                  <input name="email" formControlName="designation" matInput required>
+                  <mat-error>Designation required</mat-error>
+                  <!-- <mat-error *ngIf="teamForm.get('email').hasError('required')">Email is required!
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('email').hasError('email')">
+                    {{ teamForm.get('email').errors?.email }}
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <!-- FOR NEW PAGE -->
+                <mat-form-field *ngIf="pageType === 'new'" appearance="outline" floatLabel="always" fxFlex="49">
+                  <mat-label>Country Code</mat-label>
+                  <mat-select (selectionChange)="onChangeCountry($event.value)" placeholder="Country *" name="isoCode"
+                    formControlName="isoCode">
+                    <mat-select-trigger>
+                      {{countrySelected.CountryName}}
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let country of countryInfo; let i = index" [value]="country">
+                      {{country.CountryName}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="teamForm.get('isoCode').hasError('required')">Country Code is required!
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('isoCode').hasError('isoCode')">
+                    {{ teamForm.get('isoCode').errors?.isoCode }}
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- FOR EDIT PAGE -->
+                <mat-form-field *ngIf="pageType === 'edit'" appearance="outline" floatLabel="always" fxFlex="49">
+                  <mat-label>Country Code</mat-label>
+                  <input type="text" formControlName="isoCode" readonly matInput />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="49" class="pl-4">
+                  <mat-label>Phone</mat-label>
+                  <input name="phone" formControlName="phone" [readonly]="pageType === 'edit'" matInput required>
+                  <mat-error *ngIf="teamForm.get('phone').hasError('required')">Phone is required!
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('phone').hasError('maxlength')">Phone number length should be 10 digits
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('phone').hasError('minlength')">Phone number length should be 10 digits
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('phone').hasError('phone')">
+                    {{ teamForm.get('phone').errors?.phone }}
+                  </mat-error>
+
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="49">
+                  <mat-label>Role</mat-label>
+                  <mat-select (selectionChange)="onChangeRole($event.value)" multiple name="role" formControlName="role"
+                    placeholder="Role *">
+                    <!-- <mat-select-trigger>
+                      {{roleSelected}}
+                    </mat-select-trigger> -->
+                    <mat-option *ngFor="let role of roles; let i = index" [value]="role.value">
+                      {{role.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="teamForm.get('role').hasError('required')">Role is required!
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('role').hasError('role')">
+                    {{ teamForm.get('role').errors?.role }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="pageType !== 'edit'" appearance="outline" fxFlex="49">
+                  <mat-label>Password</mat-label>
+                  <input type="password" name="password" formControlName="password" matInput required>
+                  <!-- <mat-error>Password is required</mat-error> -->
+                  <mat-error *ngIf="teamForm.get('password').hasError('required')">Password is required!
+                  </mat-error>
+                  <mat-error *ngIf="teamForm.get('password').hasError('pattern')">
+                    Uppercase, lowercase, special and alphanumeric characters required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </form>
+
+            <button *ngIf="pageType === 'new'" mat-raised-button class="save-team-button" [disabled]="teamForm.invalid"
+              (click)="addTeam()">
+              <span>ADD</span>
+            </button>
+
+            <button *ngIf="pageType === 'edit'" mat-raised-button class="save-team-button" (click)="updateTeamMember()">
+              <span>SAVE</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

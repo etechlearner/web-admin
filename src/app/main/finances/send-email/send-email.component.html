@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Send Email</h2>
+<mat-dialog-content class="content p-24">
+  <div fxLayout="column">
+    <div class="content" fxLayout="column">
+      <form name="emailForm" [formGroup]="emailForm" novalidate>
+        <mat-form-field class="px-16 w-100-p" appearance="outline" (click)="$event.stopPropagation()">
+          <input matInput placeholder="subject" formControlName="subject">
+          <mat-error *ngIf="emailForm.get('subject').hasError('required')">
+            Subject is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="px-16 w-100-p" appearance="outline" (click)="$event.stopPropagation()">
+          <textarea matInput placeholder="message..." style="height: 90px;" formControlName="message"></textarea>
+          <mat-error *ngIf="emailForm.get('message').hasError('required')">
+            Message is required
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [disabled]="emailForm.invalid" (click)="sendMessage()" [mat-dialog-close]="true"
+    cdkFocusInitial>Send Message</button>
+</mat-dialog-actions>

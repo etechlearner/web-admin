@@ -1,0 +1,70 @@
+<h2 *ngIf="gym" mat-dialog-title style="margin: 0;">{{gym.name}}</h2>
+<mat-dialog-content class="content p-24">
+    <div fxLayout="column">
+        <div fxLayout="row wrap">
+            <div class="content" *ngIf="gym">
+                <div class="offline-switch">
+                    <mat-slide-toggle (change)="toggleStatus($event)" [disabled]="cannotActivate" [checked]="offline">
+                        Status : <span *ngIf="offline===true"> Activate Gym</span> <span *ngIf="offline===false">
+                            Inactivate
+                            Gym</span></mat-slide-toggle>
+                    <button *ngIf="gymOwner " style="float: right; margin-top: -5px;" mat-icon-button
+                        [routerLink]="'/gyms/'+gymOwner.authId+'/'+gymOwner.name" mat-dialog-close>
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button *ngIf="gymOwner " style="float: right; margin-top: -5px;" (click)="remove()" mat-icon-button
+                        mat-dialog-close>
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+                <div *ngIf="cannotActivate" style="color: red;">Profile not completed yet</div>
+                <div *ngIf="gym">
+                    <div class="billing" *ngIf="gym.billingCost && gym.commission" fxLayout="row"
+                        fxLayoutAlign="space-between">
+                        <div class="left" fxFlex="90">
+                            <p><b>Subscription Fee Per Month: ${{gym.billingCost}} </b></p>
+                            <p><b>Commission Fee Per Month: {{gym.commission}}% </b></p>
+                        </div>
+                        <div class="right" fxFlex="10">
+                            <button style="margin-left: -16px;" mat-button
+                                [routerLink]="'/gyms/edit-commission/'+gym.id+'/'+gym.handle" mat-dialog-close>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                    <div class="title">Amenities :</div>
+                    <div *ngIf="gym.gymFacility.length == 0">- None</div>
+                    <div class="facilities" *ngFor="let facility of gym.gymFacility">
+                        - {{facility.name}}
+                    </div>
+                    <div class="title">Offers :</div>
+                    <div *ngIf="gym.gymOffers.length == 0">- None</div>
+                    <div class="facilities" *ngFor="let offer of gym.gymOffers">
+                        - {{offer.name}} ${{offer.amount}}
+                    </div>
+
+                    <button mat-raised-button *ngIf="!cannotActivate" style="float: right;" (click)="goToFinance(gym)">Finance</button>
+                </div>
+
+            </div>
+
+            <div class="content" style="margin-top: -20px" *ngIf="!gym">
+                <div class="offline-switch">
+                    <button style="float: right; margin-top: 8px" (click)="remove()" mat-icon-button mat-dialog-close>
+                        <mat-icon>delete</mat-icon>
+                    </button>
+
+                    <button *ngIf="gymOwner " style="float: right; margin-top: 8px" mat-icon-button
+                        [routerLink]="'/gyms/'+gymOwner.authId+'/'+gymOwner.name" mat-dialog-close>
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+                <div class="title">Gym details not added yet.</div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" (click)="matDialogRef.close(null)">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>Done</button>
+</mat-dialog-actions>

@@ -1,0 +1,124 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row class="toolbar-bottom py-16" fxLayout="column" fxLayoutAlign="center center">
+            <!--            <img [src]="contact.avatar" class="avatar contact-avatar huge m-0"-->
+            <!--                 [alt]="contact.name"/>-->
+            <!--            <div class="contact-name mt-8">{{contact.name}} {{contact.name}}</div>-->
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+        <form [formGroup]="userbyroleForm">
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Name</mat-label>
+                    <input name="name" formControlName="name" matInput required>
+                    <mat-error>Please enter a valid name</mat-error>
+
+                    <!-- Custom Server Errors -->
+                    <!-- <mat-error *ngIf="userbyroleForm.get('name').hasError('required')">Name is required!
+                    </mat-error>
+                    <mat-error *ngIf="userbyroleForm.get('name').hasError('name')">
+                        {{ userbyroleForm.get('name').errors?.name }}
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Email</mat-label>
+                    <input name="email" formControlName="email" matInput required>
+                    <mat-error>Please enter a valid email address</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex>
+                    <mat-label>Country Code</mat-label>
+                    <mat-select (selectionChange)="onChangeCountry($event.value)" name="isoCode"
+                        formControlName="isoCode" placeholder="Country">
+                        <mat-select-trigger>
+
+                            <!-- This mat-icon is causing lag -->
+                            <!-- <mat-icon class="{{ 'flag-icon flag-icon-' +  countrySelected.code | lowercase }}">
+                            </mat-icon> -->
+
+                            {{countrySelected.CountryName}}
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let country of countryInfo; let i = index" [value]="i">
+
+                            <!-- This mat-icon is causing lag -->
+                            <!-- <mat-icon class="{{ 'flag-icon flag-icon-' +  country.code | lowercase }}"></mat-icon> -->
+
+                            {{country.CountryName}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="userbyroleForm.get('isoCode').hasError('required')">Country Code is required!
+                    </mat-error>
+                    <mat-error *ngIf="userbyroleForm.get('isoCode').hasError('isoCode')">
+                        {{ userbyroleForm.get('isoCode').errors?.isoCode }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Phone</mat-label>
+                    <input name="phone" formControlName="phone" maxlength="10" matInput required>
+                    <mat-error>Phone number length should be 10 digits</mat-error>
+                    <!-- Custom server errors -->
+                    <!-- <mat-error *ngIf="userbyroleForm.get('phone').hasError('required')">Phone is required!
+                    </mat-error>
+                    <mat-error *ngIf="userbyroleForm.get('phone').hasError('maxlength')">Phone number length must be 10
+                        Digits!
+                    </mat-error>
+                    <mat-error *ngIf="userbyroleForm.get('phone').hasError('phone')">
+                        {{ userbyroleForm.get('phone').errors?.phone }}
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start')">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Password</mat-label>
+                    <input type="password" minlength="3" maxlength="64" name="password" formControlName="password"
+                        matInput required placeholder="minimum 8 characters">
+                    <mat-error>Uppercase, lowercase, special and alphanumeric characters required</mat-error>
+
+                    <!-- Custom server errors -->
+                    <!-- <mat-error *ngIf="userbyroleForm.get('password').hasError('required')">password is required!
+                    </mat-error>
+                    <mat-error *ngIf="userbyroleForm.get('password').hasError('password')">
+                        {{ userbyroleForm.get('password').errors?.password }}
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <!--        matDialogRef.close(userbyroleForm)-->
+
+        <!-- <button *ngIf="action === 'add'"
+                mat-button  
+                [appDisableAfterClick]="reenableButton"
+                class="save-button"
+                (click)="addGymOwner()"
+                [disabled]="userbyroleForm.invalid"
+                aria-label="SAVE">
+            SAVE
+        </button> -->
+        <button *ngIf="action === 'add'" mat-button class="save-button" (click)="addGymOwner()"
+            [disabled]="userbyroleForm.invalid" aria-label="SAVE">
+            SAVE
+        </button>
+    </div>
+</div>

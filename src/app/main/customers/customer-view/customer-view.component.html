@@ -1,0 +1,100 @@
+<mat-dialog-content class="content">
+  <div fxLayout="column">
+    <div fxLayout="row wrap">
+      <div class="content">
+        <mat-table *ngIf="showTable" class="customers-table" #table [dataSource]="dataSource" matSort
+          [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Gym Name</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <div>
+                {{customer.gymName}}
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="passType">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <p class="text-truncate" style="margin-left: 3px;">{{customer.name}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <p class="text-truncate">{{customer.subscriptionPrice}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="purchaseDate">
+            <mat-header-cell *matHeaderCellDef>Purchase Date</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <p class="text-truncate">{{moment(customer.purchasedAt).format("DD-MM-YYYY")}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <!-- ACTIVATION DATE OPTINAL -->
+          <!-- <ng-container matColumnDef="activateDate">
+            <mat-header-cell *matHeaderCellDef>Activate Date</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <p class="text-truncate">{{customer.startDate ? moment(customer.startDate).format("DD-MM-YYYY") : "--"}}</p>
+            </mat-cell>
+          </ng-container> -->
+
+          <!-- EXPIRE DATE OPTIONAL -->
+          <!-- <ng-container matColumnDef="expireDate">
+            <mat-header-cell *matHeaderCellDef>Expire/Cancel Date</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <p class="text-truncate" *ngIf="customer.cancelledAt || customer.completedAt">
+                {{customer.cancelledAt ? moment(customer.cancelledAt).format('DD-MM-YYYY') : moment(customer.completedAt).format('DD-MM-YYYY')}}
+              </p>
+              <p class="text-truncate" *ngIf="!customer.completedAt && !customer.cancelledAt">{{"--"}}</p>
+            </mat-cell>
+          </ng-container> -->
+
+          <ng-container matColumnDef="daysAvailed">
+            <mat-header-cell *matHeaderCellDef>Days Remaining</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <p class="text-truncate">{{customer.remaining ? customer.remaining : "--"}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <p class="text-truncate">{{customer.status}}</p>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="others">
+            <mat-header-cell *matHeaderCellDef>Others</mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+              <!-- <button mat-button [disabled]="!customer.active" (click)="showRefundRules($event)">Refund</button> -->
+              <button mat-button (click)="showRefundRules($event)">Refund</button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+          <div class="offers-list-div">
+            <mat-row *matRowDef="let customer; columns: displayedColumns;" class="product" matRipple>
+            </mat-row>
+          </div>
+
+        </mat-table>
+
+        <mat-paginator *ngIf="showTable" #paginator [length]="totalLength" [pageSize]="limit"
+          [pageSizeOptions]="pageLimit" (page)="changePage($event)">
+        </mat-paginator>
+
+        <div *ngIf="!showTable" class="empty-offer">
+          No offer data available.
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true" align="end" style="margin-left: auto;" cdkFocusInitial>Done</button>
+</mat-dialog-actions>

@@ -1,0 +1,85 @@
+<div id="customers" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
+            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    App Users
+                </span>
+            </div>
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #SearchInput placeholder="Search by Customer Name, Phone and ID">
+                    <mat-spinner *ngIf="showSearchLoader" diameter="20"></mat-spinner>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <mat-table *ngIf="!noUser" class="customers-table" #table [dataSource]="dataSource" matSort
+                [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let customer">
+                        <div>
+                            {{customer.name}}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef>User ID</mat-header-cell>
+                    <mat-cell *matCellDef="let customer">
+                        <p>{{customer.code ? customer.code.slice(customer.code.indexOf("@") + 1, customer.code.length) : "----"}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="contact">
+                    <mat-header-cell *matHeaderCellDef>Contact</mat-header-cell>
+                    <mat-cell *matCellDef="let customer">
+                        <p>{{customer.isoCode}}-</p>
+                        <p class="text-truncate">{{customer.phone}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+                    <mat-cell *matCellDef="let customer" [matTooltip]="customer.email">
+                        <p class="text-truncate">{{customer.email}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs></mat-header-cell>
+                    <mat-cell *matCellDef="let customer" fxHide fxShow.gt-xs>
+                        <button mat-raised-button style="margin: 0 5px; margin-left: auto;"
+                            (click)="showOffers(customer)">
+                            Offers
+                        </button>
+
+                        <button mat-raised-button style="margin: 0 5px;" (click)="viewMore(customer)">
+                            More
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let customer; columns: displayedColumns;" class="product" matRipple>
+                </mat-row>
+            </mat-table>
+
+            <div class="no-user-found" *ngIf="noUser">
+                <h4>No Match found</h4>
+                <h4>Try different keywords</h4>
+            </div>
+
+            <mat-paginator #paginator [length]="totalLength" [pageSize]="limit" [pageSizeOptions]="pageLimit"
+                (page)="changePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

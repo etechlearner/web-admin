@@ -1,0 +1,84 @@
+@import "src/@fuse/scss/fuse";
+.filters-div {
+  width: 200px;
+  z-index: 1;
+
+  .gym-name {
+    font-size: 24px;
+    margin-left: 15px;
+    font-weight: bold;
+    color: white;
+    // margin-bottom: 70px;
+    width: 185px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .filter-heading {
+    font-size: 20px;
+    margin-left: 15px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 35px;
+    margin-top: 60px;
+  }
+
+  .apply-button {
+    margin-left: 15px;
+  }
+
+  .filters {
+    margin-top: 50px;
+    .back-button {
+      color: white;
+      margin-left: 5px;
+    }
+  }
+}
+
+.center {
+  .header {
+    .search-wrapper {
+      border-radius: 28px;
+      overflow: hidden;
+      @include mat-elevation(1);
+
+      .search {
+        width: 100%;
+        height: 56px;
+        line-height: 56px;
+        padding: 0 18px;
+        background-color: white;
+
+        input {
+          height: 56px;
+          min-height: 56px;
+          max-height: 56px;
+          padding: 0 16px;
+          border: none;
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .content-card {
+    .card {
+      margin: 10px;
+      .mat-card {
+        width: 100%;
+        height: 90px;
+        margin: 2px 0;
+        box-shadow: 0px 2px 16px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+          0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
+      }
+    }
+  }
+}
+
+.table-container {
+  max-height: calc(100vh - 276px);
+  overflow: auto !important;
+  height: 100vh;
+}

@@ -1,0 +1,18 @@
+<!-- <h2 mat-dialog-title>Clearing</h2> -->
+<mat-dialog-content class="content p-24">
+  <div fxLayout="column">
+    <div class="content" fxLayout="column">
+      <div class="mention">Total Earning (Current Month): <span class="amount">$ 784</span></div>
+      <div class="mention">Total Payable to GoGym (8%): <span class="amount">$ 62.74</span></div>
+
+      <mat-form-field class="w-100-p" (click)="$event.stopPropagation()">
+        <mat-label>Received Amount: </mat-label>
+        <input matInput placeholder="message..." />
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Confirm</button>
+  <!-- <button mat-button (click)="sendMessage()" [mat-dialog-close]="true" cdkFocusInitial>Send Message</button> -->
+</mat-dialog-actions>

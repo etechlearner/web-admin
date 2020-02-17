@@ -1,0 +1,36 @@
+<div id="account" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="center">
+    <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2" *ngIf="pageType ==='edit'">
+          </div>
+          <div class="h2" *ngIf="!accountAlreadyExist">
+            Add Account
+          </div>
+          <div class="h2" *ngIf="accountAlreadyExist">
+            Account
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content" *ngIf="showIframe">
+        <div class=" mat-tab-header header  p-24" fxLayout="row">
+          <h2 class="m-0">Account Information</h2>
+          <!-- OPTION TO SHOW VERIFIED/UNVERIFIED ICON -->
+          <!-- <mat-icon *ngIf="isVerified" style="color: green;">verified_user</mat-icon>
+          <mat-icon *ngIf="!isVerified" style="color: red;font-size: 20px;margin-top: 4px;">
+            error_outline</mat-icon> -->
+        </div>
+
+        <div class="iframe-div">
+          <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,117 @@
+<div id="teams" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="space-between center">
+            <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Teams
+                </span>
+            </div>
+            <!-- SEARCH BAR -->
+            <!-- <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input (keyup)="applyFilter($event.target.value)" placeholder="Search for a team member">
+                </div>
+            </div> -->
+            <button mat-raised-button [routerLink]="'/teams/new'" class="add-product-button fuse-white mt-24 mt-md-0">
+                <span>ADD MEMBER</span>
+            </button>
+        </div>
+        <div class="content-card">
+            <mat-table class="teams-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let team">
+                        <p class="text-truncate">{{team.name}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="designation">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Designation</mat-header-cell>
+                    <mat-cell *matCellDef="let team">
+                        <p class="text-truncate">{{team.designation ? team.designation : '--'}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- SINGLE ROLE -->
+                <!-- <ng-container matColumnDef="role">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+                    <mat-cell *matCellDef="let team">
+                        <p *ngIf="team.userRole[0].name == role.GFFINANCE" class="text-truncate">Finance</p>
+                        <p *ngIf="team.userRole[0].name == role.GFCUSTOMERCARE" class="text-truncate">Customer Care</p>
+                        <p *ngIf="team.userRole[0].name == role.GFSALES" class="text-truncate">Sales Rep</p>
+                        <p *ngIf="team.userRole[0].name == role.GFONBOARDING" class="text-truncate">On-Boarding</p>
+                        <p *ngIf="team.userRole[0].name == role.GFADMIN" class="text-truncate">Admin</p>
+                    </mat-cell>
+                </ng-container> -->
+
+                <ng-container matColumnDef="finance">
+                    <mat-header-cell *matHeaderCellDef>Finance</mat-header-cell>
+                    <mat-cell *matCellDef="let team">
+                        <i class="material-icons" *ngIf="financeRoles.includes(team.authId)">check</i>
+                        <i class="material-icons" *ngIf="!financeRoles.includes(team.authId)">close</i>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="sales">
+                    <mat-header-cell *matHeaderCellDef>Sales</mat-header-cell>
+                    <mat-cell *matCellDef="let team">
+                        <i class="material-icons" *ngIf="salesRoles.includes(team.authId)">check</i>
+                        <i class="material-icons" *ngIf="!salesRoles.includes(team.authId)">close</i>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="support">
+                    <mat-header-cell *matHeaderCellDef>Support</mat-header-cell>
+                    <mat-cell *matCellDef="let team">
+                        <i class="material-icons" *ngIf="careRoles.includes(team.authId)">check</i>
+                        <i class="material-icons" *ngIf="!careRoles.includes(team.authId)">close</i>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="on-boarding">
+                    <mat-header-cell *matHeaderCellDef>On Boarding</mat-header-cell>
+                    <mat-cell *matCellDef="let team">
+                        <i class="material-icons" *ngIf="onBoardingRoles.includes(team.authId)">check</i>
+                        <i class="material-icons" *ngIf="!onBoardingRoles.includes(team.authId)">close</i>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="other">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let team" style="display: flex; justify-content: flex-end;">
+                        <button mat-raised-button [matMenuTriggerFor]="optionsMenu" class="more-button">
+                            More
+                        </button>
+
+                        <mat-menu #optionsMenu="matMenu" class="more-panel" [overlapTrigger]="false">
+                            <div class="more-menu" fxLayout="column">
+                                <button mat-button class="dropdown-button" (click)="editTeamMember(team)">
+                                    Edit
+                                </button>
+                                <button mat-button class="dropdown-button" (click)="deleteTeam(team)">
+                                    Delete
+                                </button>
+                                <button mat-button [routerLink]="'/teams/'+'change-password' +'/'+team.authId"
+                                    class="dropdown-button">
+                                    Change password
+                                </button>
+                            </div>
+                        </mat-menu>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+                <mat-row *matRowDef="let team; columns: displayedColumns;" class="product">
+                </mat-row>
+            </mat-table>
+            <mat-paginator #paginator [length]="totalLength" [pageSize]="limit" [pageSizeOptions]="pageLimit"
+                (page)="changePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

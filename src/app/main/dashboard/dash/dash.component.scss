@@ -1,0 +1,30 @@
+#dashboard {
+
+    .dashboard-header {
+        font-size: 24px;
+        font-weight: normal;
+        color: white;
+        margin-top: 45px;
+        margin-left: 35px;
+    }
+
+    .content-card {
+        margin-top: 45px;
+        padding: 20px;
+        .card{
+            .mat-card {
+                width: 100%;
+                height: 120px;
+                margin: 2px 0;
+                margin-bottom: 5px;
+                box-shadow: 0px 2px 16px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+            }
+        }
+        .separator {
+            h2 {
+                text-align: center;
+                font-weight: bold;
+            }
+        }
+    }
+}

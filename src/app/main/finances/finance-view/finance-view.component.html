@@ -1,0 +1,159 @@
+<div id="todo" class="page-layout carded left-sidebar inner-scroll">
+  <div class="top-bg accent"></div>
+
+  <div class="filters-div">
+    <div class="filters">
+
+      <div fxLayout="row">
+        <button mat-icon-button class="back-button" [routerLink]="'/finances'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <!-- OPTIONAL TO SHOW GYM NAME -->
+        <div class="gym-name">{{gymName}}</div>
+      </div>
+
+      <div class="filter-heading">Filters</div>
+
+      <form name="filterForm" [formGroup]="filterForm">
+        <mat-form-field class="form-field" style="width: 100%; margin-left: 15px;" appearance="outline"
+          floatLabel="always">
+          <mat-label>From</mat-label>
+          <input matInput readonly formControlName="dateFrom" [matDatepicker]="picker" [placeholder]="from">
+          <mat-datepicker-toggle matSuffix #custom [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="outline" style="width: 100%; margin-left: 15px;"
+          floatLabel="always">
+          <mat-label>To</mat-label>
+          <input matInput readonly [matDatepicker]="pickers" formControlName="dateTo" [placeholder]="to">
+          <mat-datepicker-toggle matSuffix #custom [for]="pickers"></mat-datepicker-toggle>
+          <mat-datepicker #pickers></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%; margin-left: 15px; max-width: 100%;" appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select multiple formControlName="requestStatues">
+            <mat-option *ngFor="let status of statusList" [value]="status">{{status}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+
+      <div class="filter-buttons" fxLayout="row">
+        <button class="apply-button" mat-raised-button (click)="applyFilter()">Apply</button>
+        <button class="apply-button" mat-raised-button (click)="resetFilter()">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="center">
+    <div class="header" fxLayout="row" fxLayoutAlign="start center">
+      <div class="search-wrapper" fxFlex fxLayout="row" fxLayoutAlign="start center">
+        <div class="search" fxLayout="row" fxLayoutAlign="start center">
+          <input matInput placeholder="Search a gym..." [matAutocomplete]="auto" [formControl]="searchMoviesCtrl">
+          <mat-spinner *ngIf="showSearchLoader" diameter="20"></mat-spinner>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let gym of gyms" [value]="gym.name">
+                <div (click)="gymSelected(gym)" routerLink="/finances/{{gym.id}}">
+                  {{gym.name}}
+                </div>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="card" fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.lt-sm="0px"
+        fxLayoutAlign="space-between center">
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            Total Earning
+          </mat-card-title>
+
+          <mat-card-content>
+            $ {{totalEarning ? totalEarning : 0}}
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            GR Earning
+          </mat-card-title>
+
+          <mat-card-content>
+            $ {{grEarning ? grEarning : 0}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <mat-table class="customers-table table-container" #table [dataSource]="dataSource" matSort
+        [@animateStagger]="{value:'50'}">
+        <ng-container matColumnDef="user-name">
+          <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+          <mat-cell *matCellDef="let offer">
+            <div>
+              {{offer.appUser ? offer.appUser.name : "Pink Panther"}}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="pass-name">
+          <mat-header-cell *matHeaderCellDef>Pass Name</mat-header-cell>
+          <mat-cell *matCellDef="let offer">
+            <div>
+              {{offer.name}}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+          <mat-cell *matCellDef="let offer">
+            <p class="text-truncate">{{offer.subscriptionPrice}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="purchaseDate">
+          <mat-header-cell *matHeaderCellDef>Purchase Date</mat-header-cell>
+          <mat-cell *matCellDef="let offer">
+            <p class="text-truncate">{{moment(offer.purchasedAt).format('DD/MM/YYYY')}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+          <mat-cell *matCellDef="let offer">
+            <p class="text-truncate">{{offer.status}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="others">
+          <mat-header-cell *matHeaderCellDef>Others</mat-header-cell>
+          <mat-cell *matCellDef="let offer">
+            <button mat-raised-button [disabled]="offer.status == 'CANCELLED'" style="margin-left: 2px;"
+              (click)="refund(offer)">Refund</button>
+            <!-- RESET PASS TO BE DISCUSSED -->
+            <!-- <button mat-raised-button style="margin-left: 4px;">Reset</button> -->
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <div class="offers-list-div">
+          <mat-row *matRowDef="let offer; columns: displayedColumns;" class="product" matRipple>
+          </mat-row>
+        </div>
+
+      </mat-table>
+
+      <mat-paginator #paginator [length]="totalLength" [pageSize]="limit" [pageSizeOptions]="pageLimit"
+        (page)="applyFilter($event)">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

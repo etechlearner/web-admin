@@ -1,0 +1,17 @@
+.mat-dialog-content {
+  max-width: 660px;
+  min-width: 440px;
+  .content {
+    flex: 1;
+    .billing {
+      border: 1px solid #8080809e;
+      color: cadetblue;
+      padding: 0px 12px;
+      margin: 10px 0;
+    }
+    .title {
+      padding: 16px 0;
+      font-weight: bold;
+    }
+  }
+}

@@ -1,0 +1,114 @@
+<div id="dashboard" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="" style="z-index: 1;" fxLayout="row" fxLayoutAlign="start center">
+    <span class="dashboard-header" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+      Dashboard
+    </span>
+  </div>
+
+  <div class="center">
+    <div class="content-card">
+      <div class="separator">
+        <h2 style="margin-top: 0 !important;">Gym & User</h2>
+      </div>
+
+      <div class="card" fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.lt-sm="0px"
+        fxLayoutAlign="space-between center">
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            Gyms
+          </mat-card-title>
+          <mat-card-content>
+            {{gyms.totalgyms}}
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            App Users
+          </mat-card-title>
+          <mat-card-content>
+            {{gyms.appUsers}}
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            New Users
+          </mat-card-title>
+          <mat-card-content>
+            {{gyms.newUsers}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="separator">
+        <h2>Subscription</h2>
+      </div>
+
+      <div class="card" fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.lt-sm="0px"
+        fxLayoutAlign="space-between center">
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            Inactive
+          </mat-card-title>
+          <mat-card-content>
+            {{subscriptions.inactiveOffers}}
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            Active
+          </mat-card-title>
+          <mat-card-content>
+            {{subscriptions.activeOffers}}
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            Expired
+          </mat-card-title>
+          <mat-card-content>
+            {{subscriptions.expired}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="separator">
+        <h2>Finance</h2>
+      </div>
+
+      <div class="card" fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.lt-sm="0px"
+        fxLayoutAlign="space-between center">
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            Total Revenue
+          </mat-card-title>
+          <mat-card-content>
+            $ {{finance.totalRevenue ? finance.totalRevenue.toFixed(2) : 0}}
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            Net Receivable
+          </mat-card-title>
+          <mat-card-content>
+            $ {{finance.netreceivable ? finance.netreceivable.toFixed(2) : 0}}
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-card" fxFlex.lt-sm="100">
+          <mat-card-title>
+            Pending Refund
+          </mat-card-title>
+          <mat-card-content>
+            $ {{finance.pendingRefund ? finance.pendingRefund.toFixed(2) : 0}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

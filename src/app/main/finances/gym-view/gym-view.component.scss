@@ -1,0 +1,20 @@
+.mat-dialog-content {
+  max-width: 660px;
+  min-width: 700px;
+  padding: 0 !important;
+  .content {
+    flex: 1;
+
+    .empty-offer {
+      margin-left: 20px;
+    }
+
+    .title {
+      padding: 16px 0;
+    }
+
+    .mat-column-others {
+      min-width: 180px;
+    }
+  }
+}
